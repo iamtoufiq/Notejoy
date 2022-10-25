@@ -1,5 +1,14 @@
 const addButton = document.querySelector("#add");
 
+const updateLocalStorageData = () => {
+  const textAreaData = document.querySelectorAll("textarea");
+  const notes = [];
+  textAreaData.forEach((note) => {
+    return notes.push(note.value);
+  });
+  localStorage.setItem("notess", JSON.stringify(notes));
+};
+
 const addNewNote = (text = "") => {
   const note = document.createElement("div");
   note.classList.add("note");
@@ -21,14 +30,13 @@ const addNewNote = (text = "") => {
   const mainDiv = note.querySelector(".main");
   const textarea = note.querySelector("textarea");
 
-  // deleting the node
   delButton.addEventListener("click", () => {
     note.remove();
+    updateLocalStorageData();
   });
 
   textarea.value = text;
   mainDiv.innerHTML = text;
-  // toggle using edit button
   editButton.addEventListener("click", () => {
     mainDiv.classList.toggle("hidden");
     textarea.classList.toggle("hidden");
@@ -38,10 +46,16 @@ const addNewNote = (text = "") => {
     const value = e.target.value;
     mainDiv.innerHTML = value;
     console.log("..");
+    updateLocalStorageData();
   });
 
   document.body.append(note);
 };
+
+const notes = JSON.parse(localStorage.getItem("notess"));
+if (notes) {
+  notes.forEach((note) => addNewNote(note));
+}
 
 addButton.addEventListener("click", () => {
   addNewNote();
