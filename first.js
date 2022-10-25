@@ -45,7 +45,7 @@ const addNewNote = (text = "") => {
   textarea.addEventListener("change", (e) => {
     const value = e.target.value;
     mainDiv.innerHTML = value;
-    console.log("..");
+    // console.log("..");
     updateLocalStorageData();
   });
 
